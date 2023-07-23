@@ -1,7 +1,7 @@
 {
-  "name": "@bouncyapp/react-native-apple-music",
+  "name": "@maxmadell/react-native-apple-music",
   "title": "React Native Apple Music",
-  "version": "1.0.3",
+  "version": "1.2.0",
   "description": "A react native module for the Apple Music API",
   "main": "index.js",
   "scripts": {
@@ -21,7 +21,7 @@
     "react-native-apple-music",
     "apple"
   ],
-  "author": "Bouncy",
+  "author": "maxmadell",
   "license": "MIT",
   "licenseFilename": "LICENSE",
   "peerDependencies": {

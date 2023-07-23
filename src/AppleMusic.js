@@ -1,33 +1,35 @@
-import { NativeModules, Platform } from 'react-native';
-
+import { NativeModules, Platform } from "react-native";
 
 const AppleMusic = NativeModules.AppleMusicAPI;
 
-if (Platform.OS == 'ios') {
+if (Platform.OS == "ios") {
+  AppleMusic.initialize = AppleMusic.setValsAndInit;
 
-  AppleMusic.initialize = AppleMusic.setValsAndInit
+  AppleMusic.getUserMusicToken = AppleMusic.getUserTokenValue;
 
-  AppleMusic.getICloudID = AppleMusic.getUserRecordID
+  AppleMusic.getUserMusicTokenByDevToken =
+    AppleMusic.getUserTokenValueByDevToken;
 
-  AppleMusic.getSongCharts = AppleMusic.getCharts
+  AppleMusic.getICloudID = AppleMusic.getUserRecordID;
 
-  AppleMusic.getAlbumCharts = AppleMusic.getCharts
+  AppleMusic.getSongCharts = AppleMusic.getCharts;
 
-  AppleMusic.search = AppleMusic.searchForTerm
+  AppleMusic.getAlbumCharts = AppleMusic.getCharts;
 
-  AppleMusic.getUserPlaylists = AppleMusic.getAllUserPlaylists
+  AppleMusic.search = AppleMusic.searchForTerm;
 
-  AppleMusic.recentPlayed = AppleMusic.getRecentPlayed
+  AppleMusic.getUserPlaylists = AppleMusic.getAllUserPlaylists;
 
-  AppleMusic.getSong = AppleMusic.getSong
+  AppleMusic.recentPlayed = AppleMusic.getRecentPlayed;
 
-  AppleMusic.getAlbum = AppleMusic.getAlbum
+  AppleMusic.getSong = AppleMusic.getSong;
 
-  AppleMusic.getArtist = AppleMusic.getArtist
-  
-  AppleMusic.getHeavyRotation = AppleMusic.getHeavyRotation
-  
-  AppleMusic.getRecommendations = AppleMusic.getUserRecommendations
-  
+  AppleMusic.getAlbum = AppleMusic.getAlbum;
+
+  AppleMusic.getArtist = AppleMusic.getArtist;
+
+  AppleMusic.getHeavyRotation = AppleMusic.getHeavyRotation;
+
+  AppleMusic.getRecommendations = AppleMusic.getUserRecommendations;
 }
 export default AppleMusic;

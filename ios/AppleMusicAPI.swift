@@ -32,6 +32,26 @@ class AppleMusicAPI: NSObject {
     private var controller: SKCloudServiceController = SKCloudServiceController()
     private var musicLibraryPermissionGranted: Bool?
 
+		@objc
+    public func getUserTokenValue(_ resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
+        resolve(self.userToken);
+    }
+
+		@objc
+    public func getUserTokenValueByDevToken(_ devToken: String, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
+        if(self.userToken == nil) {
+            getUserTokenForDevToken(devToken: devToken, completion: { result, status in
+                if (status == 420) {
+                    self.client = CiderClient(storefront: .germany, developerToken: devToken, userToken: self.userToken!)
+                    resolve(self.userToken);
+                    return;
+                }
+                reject("error", "Error retrieving user token", AppleMusicApiError.init(id: status))
+            });
+            return;
+        }
+        resolve(self.userToken);
+    }
 
     @objc
     public func isReadyForBasicRequests(_ resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
@@ -65,7 +85,7 @@ class AppleMusicAPI: NSObject {
     - Parameter privateKey: The private-key associated with the keyID
     */
     @objc
-    public func setValsAndInit(_ keyID: String, devTeamID: String, privateKey: String) {
+    public func setValsAndInit(_ keyID: String, devTeamID: String, privateKey: String, storefront: Storefront = Storefront.unitedKingdom) {
         self.keyID = keyID
         self.devTeamID = devTeamID
         self.privateKey = privateKey
@@ -73,7 +93,7 @@ class AppleMusicAPI: NSObject {
         self.calcDeveloperToken()
 
         self.musicLibraryPermissionGranted = self.checkIfMusicLibraryPermissionGranted()
-        client = CiderClient(storefront: .germany, developerToken: self.devToken!)
+        client = CiderClient(storefront: storefront, developerToken: self.devToken!)
     }
     
     //MARK: Calculating and requesting tokens
@@ -121,17 +141,48 @@ class AppleMusicAPI: NSObject {
     }
 
 
-  func requestUserTokenPromise() -> Promise<Void> {
-    return Promise { promise in
-      self.controller.requestUserToken(forDeveloperToken: self.devToken!) { token, error in
-        if (error == nil) {
-            self.userToken = token;
-            promise.fulfill(());
-        } else {
-          promise.reject(error!)
+  private func getUserTokenForDevToken(devToken: String, completion: @escaping (String, Int) -> Void) {
+      firstly {
+        askUserForMusicLibPermission()
+      }.then {
+        self.checkSKCloudServiceCapability()
+      }.then {
+        self.requestUserTokenPromiseFromDevToken(devToken: devToken)
+      }.done { userToken in
+        self.userToken = userToken
+        completion("AppleMusicAPI: getUserTokenForDevToken success, user-token is: " + self.userToken!, 420)
+      }.catch { error in
+        let appleMusicApiError = error as? AppleMusicApiError
+        let code = appleMusicApiError?.id ?? AppleMusicApiError.SKCLOUDSERVICE_FATAL_ERROR
+        completion("Apple Music Api error: " + String(code), code)
       }
     }
-  }
+
+    func requestUserTokenPromise() -> Promise<String?> {
+        return Promise { promise in
+            self.controller.requestUserToken(forDeveloperToken: self.devToken!) { token, error in
+                if (error == nil) {
+                    promise.fulfill(token)
+                } else {
+                    let skError = error as? SKError
+                    promise.reject(AppleMusicApiError(id: skError?.errorCode ?? AppleMusicApiError.SKCLOUDSERVICE_FATAL_ERROR))
+                }
+            }
+        }
+    }
+
+    func requestUserTokenPromiseFromDevToken(devToken: String) -> Promise<String?> {
+        return Promise { promise in
+            self.controller.requestUserToken(forDeveloperToken: devToken) { token, error in
+                if (error == nil) {
+                    promise.fulfill(token)
+                } else {
+                    let skError = error as? SKError
+                    promise.reject(AppleMusicApiError(id: skError?.errorCode ?? AppleMusicApiError.SKCLOUDSERVICE_FATAL_ERROR))
+                }
+            }
+        }
+    }
 }
 
     // MARK: Permission handling

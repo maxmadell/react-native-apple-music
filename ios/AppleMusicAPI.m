@@ -1,13 +1,22 @@
 #import <Foundation/Foundation.h>
+#import <StoreKit/StoreKit.h>
 
 #import <React/RCTBridgeModule.h>
 
 @interface RCT_EXTERN_MODULE(AppleMusicAPI, NSObject)
 
 //Api initialization
+
+RCT_EXTERN_METHOD(getUserTokenValue:   (RCTPromiseResolveBlock)resolve
+                                                        reject:(RCTPromiseRejectBlock)reject)
+
+RCT_EXTERN_METHOD(getUserTokenValueByDevToken:  (NSString)devToken
+                                                resolve:(RCTPromiseResolveBlock)resolve
+                                                reject:(RCTPromiseRejectBlock)reject)
+
 RCT_EXTERN_METHOD(setValsAndInit:   (NSString)keyID
                                     devTeamID:(NSString)devTeamID
-                                    privateKey:(NSString)privateKey)
+                  privateKey:(NSString)privateKey storefront:(SKStorefront)storefront)
 
 RCT_EXTERN_METHOD(isReadyForBasicRequests:    (RCTPromiseResolveBlock)resolve
                                               reject:(RCTPromiseRejectBlock)reject)
