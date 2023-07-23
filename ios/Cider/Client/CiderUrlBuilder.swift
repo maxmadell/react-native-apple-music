@@ -81,7 +81,7 @@ struct CiderUrlBuilder: UrlBuilder {
 
     // MARK: Inputs
 
-    let storefront: Storefront
+    let storefront: String
     let developerToken: String
     var userToken: String?
     private let cachePolicy = URLRequest.CachePolicy.useProtocolCachePolicy
