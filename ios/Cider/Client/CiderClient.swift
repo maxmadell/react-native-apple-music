@@ -40,12 +40,12 @@ public struct CiderClient {
        - userToken: The Apple Music user token to use in requests.
        - urlFetcher: The `UrlFetcher` to use for processing requests. Defaults to a `URLSession` with the default `URLSessionConfiguration`.
      */
-    public init(storefront: Storefront, developerToken: String, urlFetcher: UrlFetcher = CiderClient.defaultURLFetcher) {
+    public init(storefront: String, developerToken: String, urlFetcher: UrlFetcher = CiderClient.defaultURLFetcher) {
         let urlBuilder = CiderUrlBuilder(storefront: storefront, developerToken: developerToken)
         self.init(urlBuilder: urlBuilder, urlFetcher: urlFetcher)
     }
     
-    public init(storefront: Storefront, developerToken: String, userToken: String, urlFetcher: UrlFetcher = CiderClient.defaultURLFetcher) {
+    public init(storefront: String, developerToken: String, userToken: String, urlFetcher: UrlFetcher = CiderClient.defaultURLFetcher) {
         let urlBuilder = CiderUrlBuilder(storefront: storefront, developerToken: developerToken, userToken: userToken)
         self.init(urlBuilder: urlBuilder, urlFetcher: urlFetcher)
     }

@@ -61,7 +61,7 @@ class AppleMusicAPI: NSObject {
         completion: { result, status in
           if status == 420 {
             self.client = CiderClient(
-              storefront: .germany, developerToken: devToken, userToken: self.userToken!)
+              storefront: self.countryCode, developerToken: devToken, userToken: self.userToken!)
             resolve(self.userToken)
             return
           }
@@ -171,9 +171,9 @@ class AppleMusicAPI: NSObject {
   ) {
     firstly {
       self.askUserForMusicLibPermission()
-    }.done {
-      self.checkSKCloudServiceCapability()
-    }.then {
+    }.done({ _ -> Void in
+      _ = self.checkSKCloudServiceCapability()
+    }).then {
       self.requestUserTokenPromiseFromDevToken(devToken: devToken)
     }.done { userToken in
       self.userToken = userToken
@@ -301,13 +301,11 @@ class AppleMusicAPI: NSObject {
   public func requestUserToken(
     _ resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock
   ) {
-    firstly {
-      self.requestUserTokenPromise()
-    }.done {
+    self.requestUserTokenPromise().done({ _ in
       self.client = CiderClient(
-        storefront: .germany, developerToken: self.devToken!, userToken: self.userToken!)
+        storefront: self.countryCode, developerToken: self.devToken!, userToken: self.userToken!)
       resolve("Ready to go")
-    }.catch { error in
+    }).catch { error in
       reject("Error", error.localizedDescription, error)
     }
   }

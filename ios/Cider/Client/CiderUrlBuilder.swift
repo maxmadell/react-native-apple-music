@@ -89,13 +89,13 @@ struct CiderUrlBuilder: UrlBuilder {
 
     // MARK: Init
 
-    init(storefront: Storefront, developerToken: String, userToken: String) {
+    init(storefront: String, developerToken: String, userToken: String) {
         self.storefront = storefront
         self.developerToken = developerToken
         self.userToken = userToken
     }
     
-    init(storefront: Storefront, developerToken: String) {
+    init(storefront: String, developerToken: String) {
         self.storefront = storefront
         self.developerToken = developerToken
     }
@@ -422,8 +422,8 @@ private extension String {
         return replacingOccurrences(of: " ", with: "+")
     }
 
-    func addStorefront(_ storefront: Storefront) -> String {
-        return replacingOccurrences(of: "{storefront}", with: storefront.rawValue)
+    func addStorefront(_ storefront: String) -> String {
+        return replacingOccurrences(of: "{storefront}", with: storefront)
     }
 
     func addId(_ id: String) -> String {
