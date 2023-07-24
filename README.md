@@ -7,258 +7,237 @@
   <a href="https://github.com/prscX/react-native-about-libraries#License"><img src="https://img.shields.io/npm/l/react-native-about-libraries.svg?style=flat" /></a>
 </p>
 
-
 React Native Apple Music by Bouncy
+
 </h1>
 
 The Apple Music API is a web service that lets you access information about the media found in the Apple Music Catalog. Here's what each one includes:
-
 
 Use this service to retrieve information about albums, songs, artists, playlists, music videos, Apple Music stations, ratings, charts, recommendations, and the user's most recently played content. With proper authorization from the user, you can also create or modify playlists and apply ratings to the user's content.
 
 Here's a quick overview of functionalities supported:
 
-* Get the Charts of an specific Country or global
-* Get recommendations for an user
-* Get the user's most recently played content
-* Create a Playlist
-* Modify Users Playlists
+- Get the Charts of an specific Country or global
+- Get recommendations for an user
+- Get the user's most recently played content
+- Create a Playlist
+- Modify Users Playlists
 
 ## 📖 Getting started
 
-`npm install @bouncyapp/react-native-apple-music --save`
+`npm install @maxmadell/react-native-apple-music --save`
 
 or
 
-`yarn add @bouncyapp/react-native-apple-music`
+`yarn add @maxmadell/react-native-apple-music`
 
 ### Mostly automatic installation
 
-`react-native link @bouncyapp/react-native-apple-music --platforms ios`
+`react-native link @maxmadell/react-native-apple-music --platforms ios`
 
 `cd ios && pod install && cd ..`
 
 ## 💻 Usage
 
 ```javascript
-import AppleMusic from '@bouncyapp/react-native-apple-music';
-
+import AppleMusic from "@maxmadell/react-native-apple-music";
 ```
 
 ## 💡 Initialization/Authorization Methods
 
 All functions returning a Promise that resolves to the result.
 
-- **initialize**( *keyID*, *teamID*, *key* )
+- **initialize**( _keyID_, _teamID_, _key_ )
 
-	Initializes the Apple Music module and resumes a logged in session if there is one. This must be the first method you call when using this module.
+  Initializes the Apple Music module and resumes a logged in session if there is one. This must be the first method you call when using this module.
 
-	- *Parameters*
+  - _Parameters_
 
-		- **keyID** - (*Required*) an object with options to pass to the Spotify Module
-		- **teamID** - (*Required*) Your Apple Developer Team Id
-		- **key** - (*Required*) You need to create an Key at Apple's Certificates, Identifiers & Profiles Page with MusicKit as Enabled services
+    - **keyID** - (_Required_) an object with options to pass to the Spotify Module
+    - **teamID** - (_Required_) Your Apple Developer Team Id
+    - **key** - (_Required_) You need to create an Key at Apple's Certificates, Identifiers & Profiles Page with MusicKit as Enabled services
 
-	- *Returns*
+  - _Returns_
 
-		- A *Promise* that resolves to a boolean when the module finishes initialization, indicating whether or not a session was automatically logged back in
+    - A _Promise_ that resolves to a boolean when the module finishes initialization, indicating whether or not a session was automatically logged back in
 
 - **login_basic**()
 
-	Login every Apple User with your Key.
+  Login every Apple User with your Key.
   User can call non-personlised api calls like getCharts etc.
 
-	- *Returns*
+  - _Returns_
 
-		- A Promise that resolves to a boolean, indicating whether or not the user was logged in
+    - A Promise that resolves to a boolean, indicating whether or not the user was logged in
 
+- **login**() (_Apple Music Subscription Required_)
 
-- **login**()   (*Apple Music Subscription Required*)
+  Login user with Apple Music Subscription
 
-	Login user with Apple Music Subscription
+  - _Returns_
 
-	- *Returns*
-
-		- A Promise that resolves to a boolean, indicating whether or not the user was logged in
-
+    - A Promise that resolves to a boolean, indicating whether or not the user was logged in
 
 - **getICloudID**()
 
-	Get the iCloud ID of my Apple Account
+  Get the iCloud ID of my Apple Account
 
-	- *Returns*
+  - _Returns_
 
-		- A Promise that resolves the iCloud Id
-
+    - A Promise that resolves the iCloud Id
 
 - **getSongCharts**()
 
-	Get the current Apple Music Charts
+  Get the current Apple Music Charts
 
-	- *Returns*
+  - _Returns_
 
-		- A Promise that resolves the Apple Music Charts
-
+    - A Promise that resolves the Apple Music Charts
 
 - **getAlbumCharts**()
 
-	Get the current Apple Music Album Charts
+  Get the current Apple Music Album Charts
 
-	- *Returns*
+  - _Returns_
 
-		- A Promise that resolves the Apple Music Album Charts
+    - A Promise that resolves the Apple Music Album Charts
 
+- **searchSong**(_query_)
 
-- **searchSong**(*query*)
+  Search for Songs at Apple Music
 
-	Search for Songs at Apple Music
+  - _Returns_
 
-	- *Returns*
+    - A Promise that resolves an Array with Songs
 
-		- A Promise that resolves an Array with Songs
+- **searchAlbum**(_query_)
 
+  Search for Albums at Apple Music
 
-- **searchAlbum**(*query*)
+  - _Returns_
 
-	Search for Albums at Apple Music
+    - A Promise that resolves an Array with Albums
 
-	- *Returns*
+- **searchArtist**(_query_)
 
-		- A Promise that resolves an Array with Albums
+  Search for Artists at Apple Music
 
+  - _Returns_
 
-- **searchArtist**(*query*)
+    - A Promise that resolves an Array with Artists
 
-	Search for Artists at Apple Music
+- **searchPlaylist**(_query_)
 
-	- *Returns*
+  Search for Playlists at Apple Music
 
-		- A Promise that resolves an Array with Artists
+  - _Returns_
 
+    - A Promise that resolves an Array with Playlists
 
-- **searchPlaylist**(*query*)
+- **getSong**(_id_)
 
-	Search for Playlists at Apple Music
+  Get an specific song by id
 
-	- *Returns*
+  - _Returns_
 
-		- A Promise that resolves an Array with Playlists
+    - A Promise that resolves the requested song
 
+- **getSongs**(_[ids]_)
 
-- **getSong**(*id*)
+  Get songs by id
 
-	Get an specific song by id
+  - _Returns_
 
-	- *Returns*
+    - A Promise that resolves the requested songs
 
-		- A Promise that resolves the requested song
+- **getSongWithIsrc**(_isrc_)
 
-- **getSongs**(*[ids]*)
+  Get an specific song by isrc
 
-	Get songs by id
+  - _Returns_
 
-	- *Returns*
+    - A Promise that resolves the requested song
 
-		- A Promise that resolves the requested songs
+- **getAlbum**(_id_)
 
-- **getSongWithIsrc**(*isrc*)
+  Get an specific album by id
 
-	Get an specific song by isrc
+  - _Returns_
 
-	- *Returns*
+    - A Promise that resolves the requested album
 
-		- A Promise that resolves the requested song
+- **getPlaylist**(_id_)
 
-- **getAlbum**(*id*)
+  Get an specific Catalog Playlist by id
 
-	Get an specific album by id
+  - _Returns_
 
-	- *Returns*
+    - A Promise that resolves the requested playlist
 
-		- A Promise that resolves the requested album
+- **getArtist**(_id_)
 
-- **getPlaylist**(*id*)
+  Get an specific artist by id
 
-	Get an specific Catalog Playlist by id
+  - _Returns_
 
-	- *Returns*
+    - A Promise that resolves the requested artist
 
-		- A Promise that resolves the requested playlist
+- **getUserPlaylists**() (_Apple Music Subscription Required_)
 
-- **getArtist**(*id*)
+  Get the Playlists of my Apple Music Account
 
-	Get an specific artist by id
+  - _Returns_
 
-	- *Returns*
+    - A Promise that resolves an Array with Playlists
 
-		- A Promise that resolves the requested artist
+- **getUserPlaylist**(_id_) (_Apple Music Subscription Required_)
 
+  Get a Playlist of my Apple Music Account
 
-- **getUserPlaylists**() (*Apple Music Subscription Required*)
+  - _Returns_
 
-	Get the Playlists of my Apple Music Account
+    - A Promise that resolves to the requested Playlist
 
-	- *Returns*
+- **recentPlayed**() (_Apple Music Subscription Required_)
 
-		- A Promise that resolves an Array with Playlists
+  Get the recently played songs, albums, artists of my Apple Music Account
 
-- **getUserPlaylist**(*id*) (*Apple Music Subscription Required*)
+  - _Returns_
 
-	Get a Playlist of my Apple Music Account
+    - A Promise that resolves an Array with songs, albums, artists
 
-	- *Returns*
+- **getHeavyRotation**() (_Apple Music Subscription Required_)
 
-		- A Promise that resolves to the requested Playlist
+  Heavy Rotation is a collection of albums and playlists selected based on your iPhone listening habits.
 
+  - _Returns_
 
-- **recentPlayed**() (*Apple Music Subscription Required*)
+    - A Promise that resolves an Array with songs, albums, artists
 
-	Get the recently played songs, albums, artists of my Apple Music Account
+- **getRecommendations**() (_Apple Music Subscription Required_)
 
-	- *Returns*
+  Get songs, albums, artists recommendations of my Apple Music Account
 
-		- A Promise that resolves an Array with songs, albums, artists
+  - _Returns_
 
+    - A Promise that resolves an Array with songs, albums, artists
 
-- **getHeavyRotation**() (*Apple Music Subscription Required*)
+- **addToPlaylist**(_playlistId_, _songId_) (_Apple Music Subscription Required_)
 
-	Heavy Rotation is a collection of albums and playlists selected based on your iPhone listening habits.
+  Add the song to the playlist in my Apple Music Account
 
-	- *Returns*
+  - _Returns_
 
-		- A Promise that resolves an Array with songs, albums, artists
-
-
-- **getRecommendations**() (*Apple Music Subscription Required*)
-
-	Get songs, albums, artists recommendations of my Apple Music Account
-
-	- *Returns*
-
-		- A Promise that resolves an Array with songs, albums, artists
-
-
-- **addToPlaylist**(*playlistId*, *songId*) (*Apple Music Subscription Required*)
-
-	Add the song to the playlist in my Apple Music Account
-
-	- *Returns*
-
-		- A Promise that resolves to "204" if successfull
-
-
-
-
+    - A Promise that resolves to "204" if successfull
 
 ## TODO
 
-* Return a user session after login
-
+- Return a user session after login
 
 ## ✨ Credits
 
-
 ## 🤔 How to contribute
+
 Have an idea? Found a bug? Please raise to [ISSUES](https://github.com/Lemonadd-UG/react-native-apple-music/issues).
 Contributions are welcome and are greatly appreciated! Every little bit helps, and credit will always be given.
 
@@ -266,7 +245,6 @@ Contributions are welcome and are greatly appreciated! Every little bit helps, a
 
 [AppStore](https://apps.apple.com/us/app/bouncy-social-music-plattform/id1435616268?ls=1)
 
-[Google Play Store](https://play.google.com/store/apps/details?id=com.thebouncyapp)
-
+[Google Play Store](https://play.google.com/store/apps/details?id=com.themaxmadell)
 
 Thanks! ❤️
