@@ -16,7 +16,7 @@ RCT_EXTERN_METHOD(getUserTokenValueByDevToken:  (NSString)devToken
 
 RCT_EXTERN_METHOD(setValsAndInit:   (NSString)keyID
                                     devTeamID:(NSString)devTeamID
-                  privateKey:(NSString)privateKey storefront:(SKStorefront)storefront)
+                  privateKey:(NSString)privateKey)
 
 RCT_EXTERN_METHOD(isReadyForBasicRequests:    (RCTPromiseResolveBlock)resolve
                                               reject:(RCTPromiseRejectBlock)reject)
